@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <div th:replace="fragments/head :: head"></div>
@@ -8,5 +8,47 @@
 <body>
 <h1>Three Albums</h1>
 <span th:text="${albumString}"</span>
+
+
+<div>
+    <h2>Add Album</h2>
+    <form action="/albums" method="post">
+        <fieldset>
+            <legend>Add an Album to Database</legend>
+
+            <label for="artist">Artist Name</label>
+            <input type="text" name="artist" required>
+
+            <label for="title">Album Title</label>
+            <input type="text" name="title" required>
+
+            <label for="songCount">Number of Songs</label>
+            <input type="number" name="songCount" required>
+
+            <label for="lengthInSeconds">Length In Seconds</label>
+            <input type="number" name="lengthInSeconds" required>
+
+            <label for="imageUrl">Album Cover URL</label>
+            <input type="url" name="imageUrl" required>
+
+            <input class="button" type="submit" value="Add Album">
+        </fieldset>
+    </form>
+</div>
+
+<div>
+    <h2>Albums in Database</h2>
+    <div id="album-group" th:each="album : ${allAlbums}">
+        <h2 th:text="${album.artist}"></h2>
+        <a th:text="${'/albums/' + album.id}"><img th:src="${album.imageUrl}" class="image"></a>
+        <h3 th:text="${album.title}"></h3>
+        <h3 th:text="${'Songs: ' + album.songCount}"></h3>
+        <h3 th:text="${'Length: ' + album.lengthInSeconds + ' Seconds'}"></h3>
+
+    </div>
+
+
+</div>
+
 </body>
 </html>

@@ -1,15 +1,24 @@
 package com.mtorres6739songr.songr.controllers;
 
 import com.mtorres6739songr.songr.models.Album;
+import com.mtorres6739songr.songr.repositories.AlbumRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.List;
 
 
 @Controller
 public class HomeController {
+
+    @Autowired
+    AlbumRepository albumRepository;
+
     @GetMapping("/")
     public String getHome() {
         return "home";
@@ -26,12 +35,27 @@ public class HomeController {
         return "capitalize";
     }
 
-    @GetMapping("/albums")
-    public String getThreeAlbums(Model m) {
-        String albumString = threeAlbums();
+//    @GetMapping("/albums")
+//    public String getThreeAlbums(Model m) {
+//        String albumString = threeAlbums();
+//
+//        m.addAttribute("albumString", albumString);
+//        return "albums";
+//    }
 
-        m.addAttribute("albumString", albumString);
-        return "albums";
+
+    @GetMapping("/albums")
+    public String getAlbums(Model m) {
+        List<Album> allAlbums = albumRepository.findAll();
+        m.addAttribute("allAlbums", allAlbums);
+        return "albums.html";
+    }
+
+    @PostMapping("/albums")
+    public RedirectView addAlbums(String albumTitle, String albumArtist, int songCount, int lengthInSeconds, String imageUrl) {
+        Album album = new Album(albumTitle, albumArtist, songCount, lengthInSeconds, imageUrl);
+        albumRepository.save(album);
+        return new RedirectView("/albums");
     }
 
     private String threeAlbums() {
