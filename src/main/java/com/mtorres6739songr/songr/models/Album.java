@@ -1,6 +1,16 @@
 package com.mtorres6739songr.songr.models;
 
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Album {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public long id;
 
     private String title;
     private String artist;
@@ -21,6 +31,14 @@ public class Album {
     public String albumString() {
         return String.format("Album: %s, Artist: %s, Song #: %s, Song Length: %s",
                 this.title, this.artist, this.songCount, this.lengthInSeconds);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -62,4 +80,5 @@ public class Album {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
+
 }
