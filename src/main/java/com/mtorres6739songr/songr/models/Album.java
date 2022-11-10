@@ -1,16 +1,14 @@
 package com.mtorres6739songr.songr.models;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
+    Long id;
 
     private String title;
     private String artist;
@@ -18,7 +16,10 @@ public class Album {
     private int lengthInSeconds;
     private String imageURL;
 
-    public Album() {}
+    @ManyToMany(mappedBy = "myAlbum")
+    private List<Song> albumSongs;
+
+    protected Album() {}
 
     public Album(String title, String artist, int songCount, int lengthInSeconds, String imageURL) {
         this.title = title;
@@ -33,12 +34,16 @@ public class Album {
                 this.title, this.artist, this.songCount, this.lengthInSeconds);
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Song> getAlbumSongs() {
+        return albumSongs;
     }
 
     public String getTitle() {

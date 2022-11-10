@@ -11,27 +11,11 @@ In your browser, navigate to ```localhost:8080/``` and use the routes below to n
 
 ## Routes
 
-### Home
+- ```/``` - Home page.
+- ```/hello``` - Hello World page.
+- ```/capitalize/{word}``` - Where {word} is any word you desire to be capitalized after it is passed in the URL.
+- ```/albums``` - Displays all albums.
 
-```localhost:8080/```
-
-### Albums
-
-```localhost:8080/albums```
-
-Currently only shows three hard coded albums.  More to follow in future releases.
-
-### Capitalize
-
-```localhost:8080/capitalize/{word}```
-
-Capitalizes the word passed in the URL.
-
-### Hello
-
-```localhost:8080/hello```
-
-Displays simple Hello greeting.
 
 ## Architecture
 
@@ -39,7 +23,8 @@ This application was built using Java, Spring Boot, Gradle, Thymeleaf.
 
 ## Change Log
 
-1.0: Initial release.
+11-9-2022: 1.1: Postgres DB integration added with user input form added to frontend.
+11-7-2022: 1.0: Initial release.
 
 ## Credits and Collaborations
 
@@ -55,6 +40,8 @@ This application was built using Java, Spring Boot, Gradle, Thymeleaf.
 
 - [IntelliJ](https://www.jetbrains.com/idea/)
 
-- Thanks to classmates Joe Rutkin and Ben Lieberan for additional help.
+- Thanks to classmates Joe Rutkin, Ben Lieberan, Maximo VincenteMejia and Mehtab Riar for additional help.
 
-- Thanks to Roger Reyes and Raul Zarate, class TA's, for additional help.
+- Thanks to Roger Reyes, Raul Zarate, our class TA's, for additional help.
+
+- Thanks to Alex White, our class instructor, for additional debugging help.

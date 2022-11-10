@@ -1,7 +1,9 @@
 package com.mtorres6739songr.songr.controllers;
 
 import com.mtorres6739songr.songr.models.Album;
+import com.mtorres6739songr.songr.models.Song;
 import com.mtorres6739songr.songr.repositories.AlbumRepository;
+import com.mtorres6739songr.songr.repositories.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,9 @@ public class HomeController {
     @Autowired
     AlbumRepository albumRepository;
 
+    @Autowired
+    SongRepository songRepository;
+
     @GetMapping("/")
     public String getHome() {
         return "home";
@@ -35,15 +40,8 @@ public class HomeController {
         return "capitalize";
     }
 
-//    @GetMapping("/albums")
-//    public String getThreeAlbums(Model m) {
-//        String albumString = threeAlbums();
-//
-//        m.addAttribute("albumString", albumString);
-//        return "albums";
-//    }
 
-
+    // Album Mapping
     @GetMapping("/albums")
     public String getAlbums(Model m) {
         List<Album> allAlbums = albumRepository.findAll();
@@ -52,20 +50,27 @@ public class HomeController {
     }
 
     @PostMapping("/albums")
-    public RedirectView addAlbums(String albumTitle, String albumArtist, int songCount, int lengthInSeconds, String imageUrl) {
-        Album album = new Album(albumTitle, albumArtist, songCount, lengthInSeconds, imageUrl);
+    public RedirectView addAlbums(String title, String artist, int songCount, int lengthInSeconds, String imageURL) {
+        Album album = new Album(title, artist, songCount, lengthInSeconds, imageURL);
         albumRepository.save(album);
         return new RedirectView("/albums");
     }
 
-    private String threeAlbums() {
-        Album[] threeAlbums = new Album[3];
-        threeAlbums[0] = new Album("Mr. Pintstripe Suite", "Big Bad Voodoo Daddy", 12, 218, "https://m.media-amazon.com/images/I/71NWXlCORYL._UX500_FMwebp_QL85_.jpg");
-        threeAlbums[1] = new Album("King of Swing", "Big Bad Voodoo Daddy", 12, 299, "https://m.media-amazon.com/images/I/71NWXlCORYL._UX500_FMwebp_QL85_.jpg");
-        threeAlbums[2] = new Album("Minnie The Moocher", "Big Bad Voodoo Daddy", 12, 283, "https://m.media-amazon.com/images/I/71NWXlCORYL._UX500_FMwebp_QL85_.jpg");
+    // Song Mapping
 
-        String albumString = threeAlbums[0].albumString() + ",\n" + threeAlbums[1].albumString() + ",\n" + threeAlbums[2].albumString();
-        return albumString;
+    @GetMapping("/song")
+    public String getAllSongs(Model m) {
+        List<Song> song = songRepository.findAll();
+        m.addAttribute("song", song);
+        return "albums";
+    }
+
+    @PostMapping("/addSong")
+    public RedirectView addSong(String title, int length, int trackNumber, String albumTitle) {
+        Album newAlbum = albumRepository.findByTitle(albumTitle);
+        Song newSong = new Song(title, length, trackNumber, newAlbum);
+        songRepository.save(newSong);
+        return new RedirectView("/albums");
     }
 
 }
